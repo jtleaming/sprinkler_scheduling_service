@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace sprinkler_scheduling_service.Models
 {
@@ -6,6 +7,12 @@ namespace sprinkler_scheduling_service.Models
     {
         public bool Run { get; set; }
 
-        public List<Section> Section { get; set; }
+        public List<Section> Sections { get; set; }
+
+        public int Id { get; set; }
+
+        public Schedule()
+        {
+        }
     }
 }

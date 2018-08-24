@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using sprinkler_scheduling_service.Models;
 
 namespace sprinkler_scheduling_service.Controllers
 {
@@ -11,9 +12,9 @@ namespace sprinkler_scheduling_service.Controllers
     {
         [HttpPost]
         [Route("AddSchedule")]
-        public void AddSchedule([FromBody] object schedule)
+        public void AddSchedule([FromBody] Schedule schedule)
         {
-            Debug.WriteLine(schedule);
+            Console.WriteLine(schedule);
         }
 
         [HttpGet("{id}")]
