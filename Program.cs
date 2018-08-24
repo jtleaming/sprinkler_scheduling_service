@@ -19,6 +19,7 @@ namespace sprinkler_scheduling_service
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:5005");
     }
 }

@@ -40,7 +40,7 @@ namespace sprinkler_scheduling_service
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
