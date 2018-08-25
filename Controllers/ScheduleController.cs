@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using sprinkler_scheduling_service.Models;
 
@@ -12,9 +13,23 @@ namespace sprinkler_scheduling_service.Controllers
     {
         [HttpPost]
         [Route("AddSchedule")]
-        public void AddSchedule([FromBody] Schedule schedule)
+        public ActionResult AddSchedule([FromBody] Schedule schedule)
         {
-            Console.WriteLine(schedule);
+            try
+            {
+                using (var db = new WebApiContext(new DbContextOptions<WebApiContext>()))
+                {
+                    db.Schedules.Add(schedule);
+                    db.SaveChanges();
+                };
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+                throw;
+            }
+            
         }
 
         [HttpGet("{id}")]
