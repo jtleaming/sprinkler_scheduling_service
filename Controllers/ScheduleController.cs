@@ -11,17 +11,20 @@ namespace sprinkler_scheduling_service.Controllers
     [ApiController]
     public class ScheduleController : ControllerBase
     {
+        private readonly WebApiContext context;
+
+        public ScheduleController(WebApiContext context)
+        {
+            this.context = context;
+        }
         [HttpPost]
         [Route("AddSchedule")]
         public ActionResult AddSchedule([FromBody] Schedule schedule)
         {
             try
             {
-                using (var db = new WebApiContext(new DbContextOptions<WebApiContext>()))
-                {
-                    db.Schedules.Add(schedule);
-                    db.SaveChanges();
-                };
+                context.Schedules.Add(schedule);
+                context.SaveChanges();
                 return Ok();
             }
             catch (System.Exception ex)
