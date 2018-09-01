@@ -11,8 +11,8 @@ using sprinkler_scheduling_service.Models;
 namespace sprinklerschedulingservice.Migrations
 {
     [DbContext(typeof(WebApiContext))]
-    [Migration("20180824085124_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20180826030420_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,42 +25,51 @@ namespace sprinklerschedulingservice.Migrations
             modelBuilder.Entity("sprinkler_scheduling_service.Models.Schedule", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<bool>("Run");
+                    b.Property<bool>("Run")
+                        .HasColumnName("run");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schedules");
+                    b.ToTable("schedules");
                 });
 
             modelBuilder.Entity("sprinkler_scheduling_service.Models.Section", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<List<string>>("Days");
+                    b.Property<List<string>>("Days")
+                        .HasColumnName("days");
 
-                    b.Property<int>("Duration");
+                    b.Property<int>("Duration")
+                        .HasColumnName("duration");
 
-                    b.Property<int?>("ScheduleId");
+                    b.Property<int>("ScheduleId")
+                        .HasColumnName("scheduleid");
 
-                    b.Property<DateTime>("StartTime");
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnName("starttime");
 
-                    b.Property<int>("ZoneNumber");
+                    b.Property<int>("ZoneNumber")
+                        .HasColumnName("zonenumber");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("Section");
+                    b.ToTable("section");
                 });
 
             modelBuilder.Entity("sprinkler_scheduling_service.Models.Section", b =>
                 {
-                    b.HasOne("sprinkler_scheduling_service.Models.Schedule")
+                    b.HasOne("sprinkler_scheduling_service.Models.Schedule", "Schedule")
                         .WithMany("Sections")
-                        .HasForeignKey("ScheduleId");
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

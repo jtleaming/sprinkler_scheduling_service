@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -23,6 +24,11 @@ namespace sprinkler_scheduling_service.Controllers
         {
             try
             {
+                if(context.Find(typeof(Schedule), schedule.Id) != null)
+                {
+                    throw new Exception($"Schedule {schedule.Id} already exists");
+                }
+
                 context.Schedules.Add(schedule);
                 context.SaveChanges();
                 return Ok();
@@ -35,10 +41,31 @@ namespace sprinkler_scheduling_service.Controllers
             
         }
 
+        [HttpPut]
+        [Route("EditSchedule")]
+        public ActionResult EditSchedule([FromBody] Schedule schedule)
+        {
+            try
+            {
+                context.Schedules.Update(schedule);
+                context.SaveChanges();
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+                throw;
+            }
+
+        }
+
+
         [HttpGet("{id}")]
         public string GetSchedule(int id)
         {
-            return $"Something {id.ToString()}";
+            var schedule = context.Schedules.Where(s => s.Id == id).Include(s => s.Sections).First();
+            var jsonSchedule = JsonConvert.SerializeObject(schedule);
+            return jsonSchedule;
         }
         [HttpGet]
         public ActionResult<string> Get()

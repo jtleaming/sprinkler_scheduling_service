@@ -13,6 +13,17 @@ namespace sprinkler_scheduling_service.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder.Entity<Schedule>()
+                .HasMany(s => s.Sections)
+                .WithOne(c => c.Schedule)
+                .IsRequired();
+
+            builder.Entity<Section>()
+                .HasOne<Schedule>(c => c.Schedule)
+                .WithMany(s => s.Sections)
+                .IsRequired();
+
             foreach (var entity in builder.Model.GetEntityTypes())
             {
                 entity.Relational().TableName = entity.Relational().TableName.ToLower();
