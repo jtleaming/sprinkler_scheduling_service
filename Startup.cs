@@ -28,8 +28,8 @@ namespace sprinkler_scheduling_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddEntityFrameworkNpgsql().AddDbContext<WebApiContext>( opt => opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection")));
-            services.AddDbContext<WebApiContext>();
+            services.AddEntityFrameworkNpgsql().AddDbContext<WebApiContext>( opt => opt.UseNpgsql(Configuration.GetConnectionString("WebApiConnection"))).
+            AddDbContext<WebApiContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +43,8 @@ namespace sprinkler_scheduling_service
             {
                 app.UseHsts();
             }
-
+            app.UseCors(builder => 
+            builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             // app.UseHttpsRedirection();
             app.UseMvc();
         }
