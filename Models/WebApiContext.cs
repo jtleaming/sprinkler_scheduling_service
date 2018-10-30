@@ -11,6 +11,8 @@ namespace sprinkler_scheduling_service.Models
 
         public DbSet<Schedule> Schedules { get; set; }
 
+        public DbSet<Section> Sections { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 

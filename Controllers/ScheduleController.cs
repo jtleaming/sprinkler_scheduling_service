@@ -70,7 +70,7 @@ namespace sprinkler_scheduling_service.Controllers
         [HttpGet]
         public ActionResult<string> Get()
         {
-            return "Something fucking happen for fucks sake";
+            return JsonConvert.SerializeObject(context.Schedules);
         }
     }
 }
